@@ -1,11 +1,22 @@
 import Database from 'better-sqlite3';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { existsSync, mkdirSync } from 'fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const db = new Database(join(__dirname, 'portfolio.db'));
+// Use data folder for persistent storage in production
+const dataDir = process.env.NODE_ENV === 'production' 
+  ? join(__dirname, 'data')
+  : __dirname;
+
+// Ensure data directory exists
+if (!existsSync(dataDir)) {
+  mkdirSync(dataDir, { recursive: true });
+}
+
+const db = new Database(join(dataDir, 'portfolio.db'));
 
 // Enable foreign keys
 db.pragma('foreign_keys = ON');
