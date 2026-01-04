@@ -3,8 +3,8 @@ services:
     build: .
     container_name: portfolio-app
     restart: unless-stopped
-    ports:
-      - "3001:3001"
+    expose:
+      - "3001"
     volumes:
       - ./server/uploads:/app/server/uploads
       - ./server/portfolio.db:/app/server/portfolio.db
@@ -12,6 +12,12 @@ services:
       - NODE_ENV=production
     networks:
       - web
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.portfolio.rule=Host(`franciscomontiron.cloud`) || Host(`www.franciscomontiron.cloud`)
+      - traefik.http.routers.portfolio.entrypoints=websecure
+      - traefik.http.routers.portfolio.tls.certresolver=letsencrypt
+      - traefik.http.services.portfolio.loadbalancer.server.port=3001
 
 networks:
   web:
