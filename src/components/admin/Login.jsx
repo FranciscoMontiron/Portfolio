@@ -5,19 +5,26 @@ import { useTranslation } from 'react-i18next';
 import { Lock } from 'lucide-react';
 
 const Login = () => {
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(false);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (login(password)) {
+    setLoading(true);
+    setError('');
+    
+    const result = await login(username, password);
+    
+    if (result.success) {
       navigate('/admin');
     } else {
-      setError(true);
-      setTimeout(() => setError(false), 2000);
+      setError(result.error || 'Login failed');
+      setLoading(false);
     }
   };
 
@@ -53,12 +60,24 @@ const Login = () => {
           {t('admin.login_title')}
         </h2>
 
+        {error && (
+          <div style={{ 
+            color: '#ff4444', 
+            marginBottom: '1rem', 
+            fontSize: '0.875rem',
+            fontFamily: 'var(--font-mono)'
+          }}>
+            {error}
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder={t('admin.password_placeholder')}
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Username..."
+            disabled={loading}
             style={{
               background: 'rgba(0,0,0,0.3)',
               border: '1px solid var(--border-color)',
@@ -67,24 +86,44 @@ const Login = () => {
               color: 'var(--text-primary)',
               fontFamily: 'var(--font-mono)',
               width: '100%',
-              outline: 'none'
+              outline: 'none',
+              opacity: loading ? 0.5 : 1
+            }}
+          />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder={t('admin.password_placeholder')}
+            disabled={loading}
+            style={{
+              background: 'rgba(0,0,0,0.3)',
+              border: '1px solid var(--border-color)',
+              padding: '1rem',
+              borderRadius: '8px',
+              color: 'var(--text-primary)',
+              fontFamily: 'var(--font-mono)',
+              width: '100%',
+              outline: 'none',
+              opacity: loading ? 0.5 : 1
             }}
           />
           <button
             type="submit"
+            disabled={loading}
             style={{
-              background: 'var(--accent-color)',
+              background: loading ? '#666' : 'var(--accent-color)',
               color: '#000',
               border: 'none',
               padding: '1rem',
               borderRadius: '8px',
               fontWeight: 600,
-              cursor: 'pointer',
+              cursor: loading ? 'not-allowed' : 'pointer',
               fontFamily: 'var(--font-mono)',
               marginTop: '1rem'
             }}
           >
-            {t('admin.login_btn')}
+            {loading ? 'Loading...' : t('admin.login_btn')}
           </button>
         </form>
       </div>

@@ -8,6 +8,7 @@ import projectsRoutes from './routes/projects.js';
 import uploadRoutes from './routes/upload.js';
 import contactRoutes from './routes/contact.js';
 import experiencesRoutes from './routes/experiences.js';
+import authRoutes from './routes/auth.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use('/uploads', express.static(join(__dirname, 'uploads')));
 
 // API Routes
+app.use('/api/auth', authRoutes);
 app.use('/api/settings', settingsRoutes);
 app.use('/api/projects', projectsRoutes);
 app.use('/api/upload', uploadRoutes);

@@ -2,6 +2,7 @@ import Database from 'better-sqlite3';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { existsSync, mkdirSync } from 'fs';
+import crypto from 'crypto';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -217,6 +218,26 @@ if (experiencesCount.count === 0) {
   });
   insertManyExperiences(initialExperiences);
   console.log('✓ Seeded initial experiences');
+}
+
+// Create admin_users table for secure authentication
+db.exec(`
+  CREATE TABLE IF NOT EXISTS admin_users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE NOT NULL,
+    password_hash TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+`);
+
+// Seed default admin user if none exists (password will be hashed on first login attempt)
+const adminCount = db.prepare('SELECT COUNT(*) as count FROM admin_users').get();
+if (adminCount.count === 0) {
+  const defaultPassword = process.env.ADMIN_PASSWORD || 'changeme123';
+  const hash = crypto.createHash('sha256').update(defaultPassword).digest('hex');
+  db.prepare('INSERT INTO admin_users (username, password_hash) VALUES (?, ?)').run('admin', hash);
+  console.log('✓ Created default admin user (username: admin, password: ' + defaultPassword + ')');
+  console.log('⚠️  IMPORTANT: Change the admin password after first login!');
 }
 
 export default db;
