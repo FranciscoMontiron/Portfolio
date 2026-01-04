@@ -1,0 +1,18 @@
+services:
+  portfolio:
+    build: .
+    container_name: portfolio-app
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./server/uploads:/app/server/uploads
+      - ./server/portfolio.db:/app/server/portfolio.db
+    environment:
+      - NODE_ENV=production
+    networks:
+      - web
+
+networks:
+  web:
+    external: true

@@ -1,0 +1,37 @@
+{
+  "header": {
+    "role": "SYSTEM_ARCHITECT.EXE",
+    "nav": {
+      "projects": "PROJECTS",
+      "admin": "ADMIN_ACCESS"
+    }
+  },
+  "hero": {
+    "boot": "SYSTEM BOOT SEQUENCE...",
+    "skip": "SKIP_BOOT"
+  },
+  "about": {
+    "bio_label": "// BIO_EXTENDED",
+    "role_prefix": "Full-Stack Developer",
+    "role_suffix": "& Systems Engineer"
+  },
+  "projects": {
+    "section_label": "// OUTPUT_STREAM",
+    "title": "Selected Projects",
+    "view_project": "View Project"
+  },
+  "philosophy": {
+    "label": "// PHILOSOPHY_CORE"
+  },
+  "admin": {
+    "login_title": "ADMIN ACCESS",
+    "password_placeholder": "Password...",
+    "login_btn": "AUTHENTICATE",
+    "dashboard_title": "ADMIN_DASHBOARD",
+    "add_project": "ADD_NEW_MODULE",
+    "edit": "EDIT",
+    "delete": "DELETE",
+    "save": "SAVE_CHANGES",
+    "cancel": "CANCEL"
+  }
+}

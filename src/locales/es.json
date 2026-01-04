@@ -1,0 +1,37 @@
+{
+  "header": {
+    "role": "ARQUITECTO_DE_SISTEMAS.EXE",
+    "nav": {
+      "projects": "PROYECTOS",
+      "admin": "ACCESO_ADMIN"
+    }
+  },
+  "hero": {
+    "boot": "SECUENCIA DE INICIO DEL SISTEMA...",
+    "skip": "SALTAR_BOOT"
+  },
+  "about": {
+    "bio_label": "// BIO_EXTENDIDA",
+    "role_prefix": "Desarrollador Full-Stack",
+    "role_suffix": "& Ingeniero en Sistemas"
+  },
+  "projects": {
+    "section_label": "// FLUJO_DE_SALIDA",
+    "title": "Proyectos Seleccionados",
+    "view_project": "Ver Proyecto"
+  },
+  "philosophy": {
+    "label": "// NÚCLEO_FILOSÓFICO"
+  },
+  "admin": {
+    "login_title": "ACCESO ADMINISTRADOR",
+    "password_placeholder": "Contraseña...",
+    "login_btn": "AUTENTICAR",
+    "dashboard_title": "PANEL_ADMINISTRATIVO",
+    "add_project": "AGREGAR_NUEVO_MÓDULO",
+    "edit": "EDITAR",
+    "delete": "BORRAR",
+    "save": "GUARDAR_CAMBIOS",
+    "cancel": "CANCELAR"
+  }
+}
