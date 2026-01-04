@@ -34,8 +34,7 @@ const Contact = () => {
   const socialLinks = [
     { icon: Github, href: 'https://github.com/franciscomontiron', label: 'GitHub' },
     { icon: Linkedin, href: 'https://linkedin.com/in/franciscomontiron', label: 'LinkedIn' },
-    { icon: Twitter, href: 'https://twitter.com/franciscomontiron', label: 'Twitter' },
-    { icon: Mail, href: 'mailto:contacto@franciscomontiron.com', label: 'Email' }
+    { icon: Twitter, href: 'https://twitter.com/franciscomontiron', label: 'Twitter' }
   ];
 
   const handleSubmit = async (e) => {
@@ -152,27 +151,7 @@ const Contact = () => {
             ))}
           </div>
 
-          {/* Email */}
-          <a 
-            href="mailto:contacto@franciscomontiron.com" 
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              padding: '0.875rem 1rem',
-              borderRadius: '10px',
-              background: 'rgba(0, 245, 255, 0.08)',
-              border: '1px solid rgba(0, 245, 255, 0.2)',
-              color: 'var(--accent-color)',
-              textDecoration: 'none',
-              fontSize: '0.85rem',
-              fontFamily: 'var(--font-mono)',
-            }}
-          >
-            <Mail size={16} />
-            <span>contacto@franciscomontiron.com</span>
-            <ArrowRight size={14} style={{ marginLeft: 'auto' }} />
-          </a>
+
         </div>
 
         {/* Right Column - Form */}
