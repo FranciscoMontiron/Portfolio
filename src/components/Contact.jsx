@@ -23,7 +23,7 @@ const Contact = () => {
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
 
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+  const API_URL = import.meta.env.VITE_API_URL || '';
 
   const quickActions = [
     { id: 'project', icon: Briefcase, label: lang === 'es' ? 'Tengo un proyecto' : 'I have a project', color: '#00f5ff' },

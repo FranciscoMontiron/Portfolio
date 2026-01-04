@@ -5,7 +5,7 @@ const ImageCarousel = ({ images = [], autoPlay = true, interval = 5000 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const intervalRef = useRef(null);
-  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+  const API_URL = import.meta.env.VITE_API_URL || '';
 
   // Filter out empty images
   const validImages = images.filter(img => img && img.trim() !== '');
