@@ -1,7 +1,12 @@
 import express from 'express';
+import { Resend } from 'resend';
 import db from '../db.js';
 
 const router = express.Router();
+
+// Initialize Resend if API key is available
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
+const CONTACT_EMAIL = process.env.CONTACT_EMAIL || 'franciscomontiron@gmail.com';
 
 // Create contact_messages table if it doesn't exist
 db.exec(`
@@ -16,8 +21,48 @@ db.exec(`
   );
 `);
 
+// Send email notification
+async function sendEmailNotification(name, email, message, reason) {
+  if (!resend) {
+    console.log('⚠️ Resend not configured, skipping email notification');
+    return;
+  }
+
+  try {
+    await resend.emails.send({
+      from: 'Portfolio <onboarding@resend.dev>',
+      to: CONTACT_EMAIL,
+      subject: `🚀 Nuevo mensaje de contacto: ${reason || 'Sin categoría'}`,
+      html: `
+        <div style="font-family: 'Courier New', monospace; max-width: 600px; margin: 0 auto; background: #0a0a0a; color: #ffffff; padding: 30px; border-radius: 12px;">
+          <h1 style="color: #00ffd5; margin-bottom: 20px;">📬 Nuevo mensaje de contacto</h1>
+          
+          <div style="background: #1a1a1a; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+            <p style="margin: 0 0 10px 0;"><strong style="color: #00ffd5;">De:</strong> ${name}</p>
+            <p style="margin: 0 0 10px 0;"><strong style="color: #00ffd5;">Email:</strong> <a href="mailto:${email}" style="color: #00ffd5;">${email}</a></p>
+            <p style="margin: 0;"><strong style="color: #00ffd5;">Razón:</strong> ${reason || 'No especificada'}</p>
+          </div>
+          
+          <div style="background: #1a1a1a; padding: 20px; border-radius: 8px;">
+            <p style="color: #00ffd5; margin: 0 0 10px 0;"><strong>Mensaje:</strong></p>
+            <p style="margin: 0; white-space: pre-wrap; line-height: 1.6;">${message}</p>
+          </div>
+          
+          <p style="margin-top: 20px; font-size: 12px; color: #666;">
+            Responde directamente a este email para contactar a ${name}.
+          </p>
+        </div>
+      `,
+      replyTo: email
+    });
+    console.log(`✅ Email notification sent to ${CONTACT_EMAIL}`);
+  } catch (error) {
+    console.error('❌ Failed to send email notification:', error);
+  }
+}
+
 // POST submit contact message
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const { name, email, message, reason } = req.body;
     
@@ -30,8 +75,8 @@ router.post('/', (req, res) => {
       VALUES (?, ?, ?, ?)
     `).run(name, email, message, reason || null);
 
-    // Here you could add email notification logic
-    // For example: sendEmail({ to: process.env.CONTACT_EMAIL, ... })
+    // Send email notification (async, don't wait for it)
+    sendEmailNotification(name, email, message, reason);
     
     console.log(`📧 New contact message from ${name} <${email}>`);
 

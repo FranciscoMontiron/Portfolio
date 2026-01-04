@@ -11,6 +11,8 @@ services:
     environment:
       - NODE_ENV=production
       - ADMIN_PASSWORD=${ADMIN_PASSWORD:-changeme123}
+      - RESEND_API_KEY=${RESEND_API_KEY:-}
+      - CONTACT_EMAIL=${CONTACT_EMAIL:-franciscomontiron@gmail.com}
     networks:
       - web
     labels:
