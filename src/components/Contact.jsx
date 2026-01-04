@@ -8,7 +8,6 @@ import {
   Github, 
   Linkedin, 
   Mail, 
-  Twitter,
   ArrowRight,
   Check,
   Loader2
@@ -33,8 +32,8 @@ const Contact = () => {
 
   const socialLinks = [
     { icon: Github, href: 'https://github.com/franciscomontiron', label: 'GitHub' },
-    { icon: Linkedin, href: 'https://linkedin.com/in/franciscomontiron', label: 'LinkedIn' },
-    { icon: Twitter, href: 'https://twitter.com/franciscomontiron', label: 'Twitter' }
+    { icon: Linkedin, href: 'https://www.linkedin.com/in/francisco-montiron-3212b7129/', label: 'LinkedIn' },
+    { icon: Mail, href: 'mailto:franciscomontiron@gmail.com', label: 'Email' }
   ];
 
   const handleSubmit = async (e) => {
